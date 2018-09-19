@@ -1,0 +1,16 @@
+{% if latest_product_list %}
+<ul>
+    {% for products in latest_product_list %}
+    <li><a href="/product/{{ products.id }}/">{{ products.name }}</a></li>
+    <form action="{% url 'products:cart' products.id %}" method="post">
+        {% csrf_token %}
+        {% for choice in products.choice_set.all %}
+        {% endfor %}
+        <input type="submit" value="Add">
+    </form>
+    
+    {% endfor %}
+</ul>
+{% else %}
+<p>No product are available.</p>
+{% endif %}
