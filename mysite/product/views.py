@@ -3,23 +3,23 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.template import loader
-from .models import Products
+from .models import Product
 
 # Create your views here.
 
 class IndexView(generic.ListView):
-    template_name = 'products/index.html'
+    template_name = 'product/index.html'
     context_object_name = 'latest_product_list'
     def get_queryset(self):
-        return Products.objects.order_by('created')[:5]
+        return Product.objects.order_by('created')[:5]
 
 class DetailView(generic.DetailView):
-    model = Products
-    template_name = 'products/detail.html'
+    model = Product
+    template_name = 'product/detail.html'
 
 # def index(request):
-#     latest_product_list = Products.objects.order_by('-created')[:5]
-#     template = loader.get_template('products/index.html')
+#     latest_product_list = Product.objects.order_by('-created')[:5]
+#     template = loader.get_template('product/index.html')
 #     context = {
 #         'latest_product_list': latest_product_list
 #     }
@@ -27,17 +27,17 @@ class DetailView(generic.DetailView):
     # return HttpResponse("Hello, world. You're at the product index.")
 
 # def detail(request,product_id):
-#     product = get_object_or_404(Products,pk=product_id)
-#     return render(request, 'products/detail.html', {'product': product})
+#     product = get_object_or_404(Product,pk=product_id)
+#     return render(request, 'product/detail.html', {'product': product})
 
 def cart(request, product_id):
     print('>>>>>>>>>>>>>>>>>>>>>>>>>>>',product_id)
-    product = get_object_or_404(Products,pk=product_id)
+    product = get_object_or_404(Product,pk=product_id)
     try:
         selected_product = product.choice_set.get(pk=product_id)
-    except (KeyError, Products.DoesNotExist):
+    except (KeyError, Product.DoesNotExist):
         # Redisplay the question voting form.
-        return render(request, 'products/detail.html', {
+        return render(request, 'product/detail.html', {
             'question': product,
             'error_message': "You didn't select a choice.",
         })
@@ -47,4 +47,4 @@ def cart(request, product_id):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
-        return HttpResponseRedirect(reverse('products', args=(product.id)))
+        return HttpResponseRedirect(reverse('product', args=(product.id)))

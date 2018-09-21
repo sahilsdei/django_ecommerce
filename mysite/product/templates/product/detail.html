@@ -1,6 +1,6 @@
 <h1> {{product.name}}{{product.id}}</h1>
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-<form action="{% url 'products:cart' product.id %}" method="post">
+<form action="{% url 'product:cart' product.id %}" method="post">
     {% csrf_token %}
     <!-- {% for choice in product.choice_set.all %} -->
     <!-- <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"> -->

@@ -1,10 +1,10 @@
 {% if latest_product_list %}
 <ul>
     {% for product in latest_product_list %}
-    <li><a href="/products/{{ product.id }}/">{{ product.name }}</a></li>
-    <form action="{% url 'products:cart' product.id %}" method="post">
+    <li><a href="/product/{{ product.id }}/">{{ product.name }}</a></li>
+    <form action="{% url 'product:cart' product.id %}" method="post">
         {% csrf_token %}
-        <!-- {% for choice in products.choice_set.all %} -->
+        <!-- {% for choice in product.choice_set.all %} -->
         <!-- {% endfor %} -->
         <input type="submit" value="Add">
     </form>
