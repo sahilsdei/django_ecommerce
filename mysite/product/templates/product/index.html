@@ -4,8 +4,8 @@
     <li><a href="/product/{{ product.id }}/">{{ product.name }}</a></li>
     <form action="{% url 'product:cart' product.id %}" method="post">
         {% csrf_token %}
-        <!-- {% for choice in product.choice_set.all %} -->
-        <!-- {% endfor %} -->
+        <!-- {{product.id}} -->
+        <!-- <input type="number" name="qty" value={{product.qty}}> -->
         <input type="submit" value="Add">
     </form>
     

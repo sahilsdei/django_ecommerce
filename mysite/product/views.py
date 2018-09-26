@@ -1,5 +1,5 @@
 from django.http import HttpResponse,HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render,redirect
 from django.urls import reverse
 from django.views import generic
 from django.template import loader
@@ -20,18 +20,13 @@ class DetailView(generic.DetailView):
 def cart(request, product_id):
     product = get_object_or_404(Product,pk=product_id)
     try:
-        selected_product =product
-    except (KeyError, Product.DoesNotExist):
-        # Redisplay the product form.
-        return render(request, 'product/detail.html', {
-            'product': product,
-            'error_message': "You didn't select a choice.",
-        })
+        cart = Cart.objects.get(product=product_id)
+    except Cart.DoesNotExist:
+        cart = None
+
+    if(cart):
+        cart.qty +=1 
+        cart.save()
     else:
-        print('here>>>>')
-        """ Add item to cart"""
-        Cart.objects.create(product=selected_product,user=1)
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('product'))
+        Cart.objects.create(product=product,user=1,qty=1)
+    return redirect('/product')
