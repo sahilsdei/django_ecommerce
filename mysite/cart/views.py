@@ -8,7 +8,7 @@ from .models import Cart
 # Create your views here.
 class IndexView(generic.ListView):
     latest_product_list = Cart.objects.order_by('-created')[:5]
-    template = loader.get_template('products/index.html')
+    template = loader.get_template('product/index.html')
     context = 'latest_cart_list'
     def get_queryset(self):
         return Cart.objects.order_by('created')[:5]
