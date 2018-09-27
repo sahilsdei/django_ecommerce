@@ -1,0 +1,15 @@
+{% if latest_cart_list %}
+<ul>
+    <form>
+        {% for cart in latest_cart_list %}
+            <div>
+                {{cart}}
+                <input name="qty" value={{cart.qty}}>
+            </div>
+        {% endfor %}
+    </form>
+</ul>
+<button> Checkout </button>
+{% else %}
+<p>No cart are available.</p>
+{% endif %}
